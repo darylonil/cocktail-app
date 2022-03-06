@@ -37,7 +37,7 @@
             <img src="{{ drink.strDrinkThumb }}" class="img-thumbnail" />
           </div>
           <div class="col">{{ drink.strDrink }}</div>
-          <div class="col">
+          <div class="col" *ngIf="drink.strCategory">
             <span class="badge bg-dark">{{ drink.strCategory }}</span>
           </div>
         </div>
@@ -76,6 +76,11 @@
                   class="card-img-top"
                 />
                 <div class="card-body">
+                  <span
+                    class="badge bg-dark"
+                    *ngIf="modalDetails.strCategory"
+                    >{{ modalDetails.strCategory }}</span
+                  >
                   <span
                     class="badge bg-dark"
                     *ngIf="modalDetails.strAlcoholic"
