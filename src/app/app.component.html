@@ -1,0 +1,178 @@
+<nav class="navbar navbar-light bg-dark">
+  <div class="input-group mb-3 input-group-search">
+    <span class="input-group-text" id="basic-addon1"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-search"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+        />
+      </svg>
+    </span>
+    <input
+      #searchKey
+      class="form-control"
+      placeholder="Search"
+      (input)="onSearchInput(searchKey.value)"
+    />
+  </div>
+</nav>
+<div class="container">
+  <ul class="list-group drink-list">
+    <li
+      class="list-group-item list-group-item-action"
+      *ngFor="let drink of drinks"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="onDrinkSelect(drink)"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-1">
+            <img src="{{ drink.strDrinkThumb }}" class="img-thumbnail" />
+          </div>
+          <div class="col">{{ drink.strDrink }}</div>
+          <div class="col">
+            <span class="badge bg-dark">{{ drink.strCategory }}</span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ modalDetails.strDrink }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="column">
+              <div class="card">
+                <img
+                  src="{{ modalDetails.strDrinkThumb }}"
+                  class="card-img-top"
+                />
+                <div class="card-body">
+                  <span
+                    class="badge bg-dark"
+                    *ngIf="modalDetails.strAlcoholic"
+                    >{{ modalDetails.strAlcoholic }}</span
+                  >
+                  <!-- TOD0: color coded alocoholic and non alcoholic -->
+                  <h5 class="card-title">Ingredients</h5>
+
+                  <ul class="list-group card-text">
+                    <li
+                      class="list-group-item"
+                      *ngFor="let ingredient of ingredients"
+                    >
+                      {{ ingredient }}
+                    </li>
+                  </ul>
+                  <h5 class="card-title">How to make it</h5>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Language</span
+                    >
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      [(ngModel)]="langSelected"
+                      (change)="languageSelected()"
+                    >
+                      <option
+                        *ngFor="let language of languages"
+                        [ngValue]="language"
+                      >
+                        {{ language }}
+                      </option>
+                    </select>
+                  </div>
+                  <p class="card-text">
+                    {{ instructions }}
+                  </p>
+
+                  <a
+                    *ngIf="modalDetails.strVideo"
+                    href="{{ modalDetails.strVideo }}"
+                    class="alert-link"
+                    target="_blank"
+                    ><h5 class="card-title">Video</h5></a
+                  >
+
+                  <ul class="list-group">
+                    <li class="list-group-item" *ngIf="modalDetails.strTags">
+                      <div class="row">
+                        <div class="col-6">Tags</div>
+                        <div class="col">
+                          <span class="badge bg-dark">{{
+                            modalDetails.strTags
+                          }}</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="modalDetails.strIBA">
+                      <div class="row">
+                        <div class="col-6">IBA</div>
+                        <div class="col">
+                          <span class="badge bg-dark">{{
+                            modalDetails.strIBA
+                          }}</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="modalDetails.strGlass">
+                      <div class="row">
+                        <div class="col-6">Glass</div>
+                        <div class="col">
+                          <span class="badge bg-dark">{{
+                            modalDetails.strGlass
+                          }}</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li
+                      class="list-group-item"
+                      *ngIf="modalDetails.dateModified"
+                    >
+                      <div class="row">
+                        <div class="col-6">Date Modified</div>
+                        <div class="col">
+                          <span class="badge bg-dark">{{ dateModified }}</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
